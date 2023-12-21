@@ -33,6 +33,7 @@ Pillow==10.1.0
 pygame==2.5.2
 pyparsing==3.1.1
 python-dateutil==2.8.2
+-e git+git@github.com:poooohbear/qcenv.git@eaead81f2a328a660ffbac2d61bf06e51bcae8fc#egg=qcenv
 qulacs==0.6.2
 scipy==1.11.4
 six==1.16.0
