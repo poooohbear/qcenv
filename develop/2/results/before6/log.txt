@@ -1,0 +1,4 @@
+Using cpu
+episodes: 50000
+sync_interval: 20
+num_tests: 1

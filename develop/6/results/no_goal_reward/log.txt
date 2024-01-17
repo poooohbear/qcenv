@@ -1,0 +1,5 @@
+Using cpu
+episodes: 200
+sync_interval: 20
+num_tests: 5
+報酬の正規化あり、達成報酬なし

@@ -30,10 +30,10 @@ class DQNAgent:
     def sync_target(self):
         self.qnet_target = copy.deepcopy(self.qnet)
 
-    def get_action(self, state: np.ndarray):
+    def get_action(self, state: np.ndarray, is_eval: bool = False):
         state = state.to(self.device)
         with torch.no_grad():
-            if torch.rand(1) < self.epsilon:
+            if (torch.rand(1) < self.epsilon) and (not is_eval):
                 action = torch.randint(0, self.qnet.action_size, (1,))
             else:
                 state = state[None, :]
@@ -64,3 +64,6 @@ class DQNAgent:
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
+
+    def set_eval(self):
+        self.eval = True
