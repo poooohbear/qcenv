@@ -72,8 +72,8 @@ class EasyTestEnv(gym.Env):
         self.observation[action, self.step_count - 1] = 1
         reward = self._calc_reward()
         terminated = reward >= self.target_reward
-        # if terminated:  # 変更2
-        #     reward += 1.0
+        if terminated:  # 変更2
+            reward += 1.0
         truncated = self.step_count >= self.T
         info = None
         return self.observation, reward, terminated, truncated, info
@@ -121,7 +121,7 @@ class EasyTestEnv(gym.Env):
             np.abs(qulacs.state.inner_product(self.state, self.target_state)) ** 2
         )
         reward = np.log(fidelity)
-        reward = reward / 60  # 報酬を[-1, 1]にするために60で割る 変更1
+        # reward = reward / 60  # 報酬を[-1, 1]にするために60で割る 変更1
         # reward = 0
         # if fidelity > 0.9:
         #     reward = 1.0
