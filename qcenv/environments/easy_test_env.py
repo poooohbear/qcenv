@@ -9,13 +9,13 @@ import numpy as np
 import gymnasium as gym
 import qulacs
 
-from qcenv.utils import complex2real
+from qcenv.utils import complex2real, calc_bhattacharyya_coefficient
 
 
 class EasyTestEnv(gym.Env):
     metadata = {"render.modes": ["ansi"]}  # ansi形式とは、文字列を返す形式のこと
 
-    def __init__(self, render_mode=None):
+    def __init__(self, render_mode=None, reward_type="fidelity"):
         self.n_qubits = 3
         self.T = 5
         self._n_one_qubit_gates = 1
@@ -43,6 +43,8 @@ class EasyTestEnv(gym.Env):
         self.target_reward = np.log(self.target_fidelity)
 
         self.observation = np.zeros(self.observation_size, dtype=np.int32)
+
+        self.reward_type = reward_type
 
     def reset(self, seed=None, options=None):
         # We need the following line to seed self.np_random
@@ -111,11 +113,21 @@ class EasyTestEnv(gym.Env):
                 raise ValueError("Invalid action_id")
 
     def _calc_reward(self):
-        # 今回はfidelityベース
-        fidelity = (
-            np.abs(qulacs.state.inner_product(self.state, self.target_state)) ** 2
-        )
-        reward = np.log(fidelity)
-        reward = reward / 60  # 報酬を[-1, 1]にするために60で割る
+        if self.reward_type == "fidelity":
+            # 今回はfidelityベース
+            fidelity = (
+                np.abs(qulacs.state.inner_product(self.state, self.target_state)) ** 2
+            )
+            reward = np.log(fidelity)
+            reward = reward / 60
+        elif self.reward_type == "Bhattacharyya":
+            # Bhattacharyya distance
+            # Bhattacharrya distanceは
+            # self.stateの測定確率*target_stateの測定確率の平方根の総和
+            bhattacharyya_coefficient = calc_bhattacharyya_coefficient(
+                self.state, self.target_state
+            )
+            reward = np.log(bhattacharyya_coefficient)
+            reward = reward / 1.0
 
         return reward
