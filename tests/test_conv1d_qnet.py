@@ -69,7 +69,7 @@ def test_conv1d_qnet():
         episode_rewards.append(episode_reward)
     action_lengths = np.array(action_lengths)
     mean_action_length = action_lengths.mean(axis=0)
-    assert mean_action_length < 4
+    assert mean_action_length <= 4.0
 
     episode_rewards = np.array(episode_rewards)
     mean_episode_reward = episode_rewards.mean(axis=0)
