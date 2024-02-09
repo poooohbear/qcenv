@@ -58,7 +58,7 @@ class EasyTestEnv(gym.Env):
 
         # observation = complex2real(self.state.get_vector())
         self.observation = np.zeros(self.observation_size, dtype=np.int32)
-        info = None
+        info = {}
         return self.observation, info
 
     def step(self, action):
@@ -72,7 +72,7 @@ class EasyTestEnv(gym.Env):
         if terminated:  # 変更2
             reward += 1.0
         truncated = self.step_count >= self.T
-        info = None
+        info = {}
         return self.observation, reward, terminated, truncated, info
 
     def _initialize_circuit(self, n_qubits):
@@ -128,6 +128,8 @@ class EasyTestEnv(gym.Env):
                 self.state, self.target_state
             )
             reward = np.log(bhattacharyya_coefficient)
-            reward = reward / 1.0
+            reward = reward / 10
+        else:
+            raise ValueError("Invalid reward_type")
 
         return reward
