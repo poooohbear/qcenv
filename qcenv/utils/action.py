@@ -48,6 +48,3 @@ class ActionFactory:
                     )
                     self.action_list.append(action)
                     self.action_id += 1
-
-    def get_n_action(self):
-        return self.action_id
