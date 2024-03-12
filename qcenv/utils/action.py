@@ -2,7 +2,9 @@ import qulacs
 
 
 class Action:
-    def __init__(self, action_id, gate_name, *gate_params):
+    action_id: int
+
+    def __init__(self, action_id: int, gate_name, *gate_params):
         self.action_id = action_id
         self.gate_name = gate_name
         self.gate = getattr(qulacs.gate, self.gate_name)(*gate_params)
@@ -17,7 +19,7 @@ class ActionFactory:
         self.action_list = []
         self.action_id = 0
 
-    def sample(self, action_id):
+    def sample(self, action_id) -> Action:
         return self.action_list[action_id]
 
     def add_one_qubit_gate(self, one_qubit_gate_list, angle_list=None):
