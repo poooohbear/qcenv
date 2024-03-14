@@ -1,7 +1,6 @@
 import numpy as np
 import gymnasium as gym
 import qulacs
-
 from qcenv.utils import ActionFactory
 
 from typing import Callable
@@ -54,7 +53,7 @@ class QCEnv(gym.Env):
         reward = self.reward_function(self.state, self.target_state)
         terminated = reward >= self.target_reward
         if terminated:
-            reward += 1.0
+            reward += 100
         truncated = self.step_count >= self.max_circuit_depth
         info = {}
         return self.observation, reward, terminated, truncated, info

@@ -8,10 +8,8 @@ def fidelity(state: QuantumState, target_state: QuantumState) -> float:
     return fidelity
 
 
-def log_fidelity(
-    state: QuantumState, target_state: QuantumState, normalize_factor: float = 50.0
-) -> float:
-    return np.log(fidelity(state, target_state)) / normalize_factor
+def log_fidelity(state: QuantumState, target_state: QuantumState) -> float:
+    return np.log(fidelity(state, target_state))
 
 
 def bhattacharyya_coefficient(state: QuantumState, target_state: QuantumState) -> float:
@@ -29,6 +27,6 @@ def bhattacharyya_coefficient(state: QuantumState, target_state: QuantumState) -
 
 
 def log_bhattacharyya_coefficient(
-    state: QuantumState, target_state: QuantumState, normalize_factor: float = 1.0
+    state: QuantumState, target_state: QuantumState
 ) -> float:
-    return np.log(bhattacharyya_coefficient(state, target_state)) / normalize_factor
+    return np.log(bhattacharyya_coefficient(state, target_state))
