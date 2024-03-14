@@ -56,8 +56,8 @@ rewards, length = evaluate_policy(
 print(f"mean reward:{np.mean(rewards):.2f} +/- {np.std(rewards):.2f}") 
 print(f"mean length:{np.mean(length):.2f} +/- {np.std(length):.2f}")
 
-# mean reward:0.97 +/- 0.04
-# mean length:1.92 +/- 0.26
+# mean reward:1.93 +/- 0.04
+# mean length:1.91 +/- 0.29
 ```
 
 
