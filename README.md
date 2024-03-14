@@ -13,6 +13,7 @@ import qulacs
 from qcenv.environments import QCEnv
 from qcenv.utils import log_fidelity, ActionFactory
 from functools import partial
+from gymnasium.wrappers import NormalizeReward
 ```
 
 ### building target circuit
@@ -31,14 +32,14 @@ action_factory.add_two_qubit_gate(["CNOT"])
 
 ### environment setting
 ```python
-normalize_factor = 50.0  # reward clipping
 env = QCEnv(
     target_circuit=target_circuit,
-    target_reward=np.log(0.9) / normalize_factor,
+    target_reward=np.log(0.9) # log(target_fidelity)
     reward_function=partial(log_fidelity, normalize_factor=normalize_factor),
     action_factory=action_factory,
     max_circuit_depth=10,
 )
+env = NormalizeReward(env)
 ```
 
 ### training
